@@ -1,12 +1,16 @@
 package com.mushroomapp.app.controller;
 
+import com.google.api.gax.rpc.NotFoundException;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -21,12 +25,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
+    public User createUser(@RequestBody User user) {
         try {
             this.userService.save(user);
-            return ResponseEntity.ok(user);
+            return user;
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return null;
         }
     }
 
@@ -44,15 +48,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUser(@PathVariable UUID id) {
-        try {
-            User user = this.userService.getUserById(id);
-            if(user == null) throw new IllegalArgumentException("user not found with id " + id);
-            return ResponseEntity.ok(user);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+
+        Optional<User> user = this.userService.getUserById(id);
+        if (user.isPresent()) return ResponseEntity.ok(user.get());
+
+        throw new NoSuchElementException("user not found with id " + id);
     }
 
     @GetMapping
@@ -68,20 +68,22 @@ public class UserController {
     }
 
     @PostMapping("/follow/{id}")
-    public ResponseEntity<Object> userFollowsUser(@PathVariable UUID id, HttpServletRequest request) {
-        try {
-            String token = httpRequestReader.getId(request);
+    public ResponseEntity<Object> userFollowsUser(@PathVariable UUID id, HttpServletRequest request) throws BadRequestException {
 
-            User currentUser = this.userService.getUserByToken(token);
-            User userToFollow = this.userService.getUserById(id);
+        String token = httpRequestReader.getId(request);
 
-            userService.followUser(currentUser, userToFollow);
+        Optional<User> currentUser = this.userService.getUserByToken(token);
+        if (currentUser.isEmpty()) throw new NoSuchElementException("User does not exist with token " + token);
 
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-        }
+        Optional<User> userToFollow = this.userService.getUserById(id);
+        if (userToFollow.isEmpty()) throw new BadRequestException("User does not exist with id " + id);
+
+        userService.followUser(
+                currentUser.get(),
+                userToFollow.get()
+        );
+
+        return ResponseEntity.ok().build();
+
     }
 }

@@ -4,13 +4,13 @@ import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.content.PostMedia;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.model.storage.Media;
-import com.mushroomapp.app.repository.PostMediaRepository;
 import com.mushroomapp.app.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,16 +20,39 @@ public class PostService {
     private PostRepository postRepository;
 
     @Autowired
+    private MediaService mediaService;
+
+    @Autowired
     private PostMediaService postMediaService;
 
     @Transactional
     public Post createPost(User user, List<Media> media, String caption) {
         Post post = new Post();
-        post.setUser(user);
 
-        for(Media m : media) postMediaService.addMediaToPost(m, post);
+        post.setUser(user); // User adds post, post sets its user
+        postRepository.save(post);
+
+        user.addPost(post);
+
+        for(Media m : media) {
+            mediaService.save(m);
+            PostMedia postMedia = new PostMedia();
+            postMedia.setPost(post);
+            postMedia.setMedia(m);
+
+            System.out.println("Post media: " + postMedia);
+            postMediaService.save(postMedia);
+        }
 
         return this.postRepository.save(post);
+    }
+
+    public Optional<Post> findPostById(UUID postId) {
+        return this.postRepository.findById(postId);
+    }
+
+    public void deletePostById(UUID postId) {
+        this.postRepository.deleteById(postId);
     }
 
 }

@@ -1,6 +1,9 @@
 package com.mushroomapp.app.model.profile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mushroomapp.app.model.content.Post;
+import com.mushroomapp.app.model.interaction.Like;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
@@ -30,8 +33,9 @@ public class User {
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     @ToString.Exclude
+    @JsonIgnore
     private List<Post> posts;
 
     @ManyToMany
@@ -51,6 +55,11 @@ public class User {
     @CreationTimestamp
     private LocalDateTime timestamp;
 
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Like> likes;
+
     @Transactional
     public void follow(User other) {
         this.following.add(other);
@@ -69,5 +78,25 @@ public class User {
     @Transactional
     public void removeFollower(User follower) {
         this.followers.remove(follower);
+    }
+
+    @Transactional
+    public void addPost(Post post) {
+        this.posts.add(post);
+    }
+
+    @Transactional
+    public void removePost(Post post) {
+        this.posts.remove(post);
+    }
+
+    @Transactional
+    public void addLike(Like like) {
+        this.likes.add(like);
+    }
+
+    @Transactional
+    public void removeLike(Like like) {
+        this.likes.remove(like);
     }
 }

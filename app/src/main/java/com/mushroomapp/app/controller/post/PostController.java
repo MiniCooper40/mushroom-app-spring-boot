@@ -1,5 +1,7 @@
-package com.mushroomapp.app.controller;
+package com.mushroomapp.app.controller.post;
 
+import com.mushroomapp.app.controller.FirebaseRequestReader;
+import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.model.storage.Directory;
 import com.mushroomapp.app.model.storage.Media;
@@ -7,25 +9,18 @@ import com.mushroomapp.app.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import net.bytebuddy.utility.RandomString;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @RestController
 @RequestMapping("/v1/posts")
@@ -67,16 +62,17 @@ public class PostController {
             e.printStackTrace();
             throw new FileSystemException("Could not insert file");
         }
-
-        //return this.storageService.storeMultipartFileInDirectory(file, directoryService.newestDirectory());
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> uploadPost(@RequestParam("file") MultipartFile[] files, @RequestParam("caption") String caption, HttpServletRequest request) throws IOException {
+    public PostResponse uploadPost(@RequestParam("file") MultipartFile[] files, @RequestParam("caption") String caption, HttpServletRequest request) throws IOException {
         System.out.println("In upload post. Caption is: " + caption);
 
         String token = this.firebaseRequestReader.getId(request);
-        User user = this.userService.getUserByToken(token);
+
+        Optional<User> user = this.userService.getUserByToken(token);
+
+        if(user.isEmpty()) throw new NoSuchElementException("could not find user with token " + token);
 
         List<Media> mediaInPost = Arrays.stream(files).map(f -> {
             try {
@@ -86,8 +82,32 @@ public class PostController {
             }
         }).toList();
 
-        this.postService.createPost(user, mediaInPost, caption);
+        Post posted = this.postService.createPost(user.get(), mediaInPost, caption);
 
-        return ResponseEntity.ok().build();
+        return new PostResponse(posted.getId());
+    }
+
+    @GetMapping("/user/{id}")
+    public List<Post> postsForUser(@PathVariable UUID id) throws BadRequestException {
+        Optional<User> user = this.userService.getUserById(id);
+
+        if(user.isEmpty()) throw new BadRequestException("User does not exist with ID: " + id);
+
+        System.out.println("In PostController. Users posts are: " + user.get().getPosts());
+        System.out.println("And user is " + user.get());
+
+        return user.get().getPosts();
+    }
+
+    @GetMapping("/{id}")
+    public Post getPost(@PathVariable UUID id) {
+        Optional<Post> post = this.postService.findPostById(id);
+        if(post.isPresent()) return post.get();
+        throw new NoSuchElementException("no post exists with id " + id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePost(@PathVariable UUID id) {
+        this.postService.deletePostById(id);
     }
 }

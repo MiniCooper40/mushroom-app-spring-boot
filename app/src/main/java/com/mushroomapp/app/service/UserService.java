@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,12 +27,12 @@ public class UserService {
         this.userRepository.deleteById(id);
     }
 
-    public User getUserById(UUID id) {
-        return this.userRepository.getReferenceById(id);
+    public Optional<User> getUserById(UUID id) {
+        return this.userRepository.findById(id);
     }
 
-    public User getUserByToken(String token) {
-        return this.userRepository.getReferenceByToken(token);
+    public Optional<User> getUserByToken(String token) {
+        return this.userRepository.findByToken(token);
     }
 
     public List<User> getAllUsers() {

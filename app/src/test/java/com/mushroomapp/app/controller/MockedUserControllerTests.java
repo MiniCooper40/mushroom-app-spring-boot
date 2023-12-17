@@ -37,8 +37,8 @@ public class MockedUserControllerTests {
     private final ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
 
     private final List<User> users = List.of(
-            new User(UUID.fromString("0d95d28f-4e81-4eb3-a0e9-5fa36e351ea9"), "123123123", "user1", null, null, null),
-            new User(UUID.fromString("19d6da98-1869-451f-9d63-7ff837cd7258"), "abcabcabc", "user2", null, null, null)
+            new User(UUID.fromString("0d95d28f-4e81-4eb3-a0e9-5fa36e351ea9"), "123123123", "user1", null, null, null, null),
+            new User(UUID.fromString("19d6da98-1869-451f-9d63-7ff837cd7258"), "abcabcabc", "user2", null, null, null, null)
     );
 
 
