@@ -74,4 +74,14 @@ public class Post {
     public void removeLike(Like like) {
         this.likes.remove(like);
     }
+
+    @Transactional
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
+    @Transactional
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
+    }
 }

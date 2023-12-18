@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
@@ -17,12 +18,34 @@ public class EntityDoesNotExistException extends ResponseEntityExceptionHandler 
             value = {NoSuchElementException.class}
     )
     public ResponseEntity<Object> handleNoSuchElement(NoSuchElementException exception, WebRequest request) {
-        ErrorMessage errorMessage = new ErrorMessage(exception.getMessage());
+        ErrorMessage errorMessage = ErrorMessage
+                .builder()
+                .cause(exception.getMessage())
+                .build();
+
         return handleExceptionInternal(
                 exception,
                 errorMessage,
                 new HttpHeaders(),
                 HttpStatus.NOT_FOUND,
+                request
+        );
+    }
+
+    @ExceptionHandler(
+            value = {SQLException.class}
+    )
+    public ResponseEntity<Object> handleSqlException(SQLException exception, WebRequest request) {
+        ErrorMessage errorMessage = ErrorMessage
+                .builder()
+                .cause(exception.getMessage())
+                .build();
+
+        return handleExceptionInternal(
+                exception,
+                errorMessage,
+                new HttpHeaders(),
+                HttpStatus.BAD_REQUEST,
                 request
         );
     }

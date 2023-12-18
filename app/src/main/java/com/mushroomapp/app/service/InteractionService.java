@@ -1,11 +1,17 @@
 package com.mushroomapp.app.service;
 
 import com.mushroomapp.app.model.content.Post;
+import com.mushroomapp.app.model.interaction.Comment;
 import com.mushroomapp.app.model.interaction.Like;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.repository.CommentRepository;
 import com.mushroomapp.app.repository.LikeRepository;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class InteractionService {
@@ -31,5 +37,29 @@ public class InteractionService {
 
         user.addLike(like);
         post.addLike(like);
+    }
+
+    public List<Like> findAllLikes() {
+        return this.likeRepository.findAll();
+    }
+
+    public Comment saveComment(Comment comment) {
+        return this.commentRepository.save(comment);
+    }
+
+    public void deleteCommentById(UUID commentId) {
+        this.commentRepository.deleteById(commentId);
+    }
+
+    public Optional<Like> findLike(UUID userId, UUID postId) {
+        return this.likeRepository.findLike(userId, postId);
+    }
+
+    public void deleteLike(Like like) {
+        this.likeRepository.delete(like);
+    }
+
+    public Optional<Comment> findCommentById(UUID commentId) {
+        return this.commentRepository.findById(commentId);
     }
 }

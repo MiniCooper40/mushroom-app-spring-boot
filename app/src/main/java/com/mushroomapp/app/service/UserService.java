@@ -39,11 +39,13 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+    @Transactional
     public void followUser(User a, User b) {
         a.follow(b);
         b.addFollower(a);
     }
 
+    @Transactional
     public void unfollowUser(User a, User b) {
         a.unfollow(b);
         b.removeFollower(a);

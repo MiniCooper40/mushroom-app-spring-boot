@@ -3,6 +3,7 @@ package com.mushroomapp.app.model.profile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mushroomapp.app.model.content.Post;
+import com.mushroomapp.app.model.interaction.Comment;
 import com.mushroomapp.app.model.interaction.Like;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -45,10 +46,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "followed_id")
     )
     @ToString.Exclude
+    @JsonIgnore
     private List<User> following = new LinkedList<>();
 
     @ManyToMany(mappedBy = "following")
     @ToString.Exclude
+    @JsonIgnore
     private List<User> followers = new LinkedList<>();
 
     @Column(name = "created_on", updatable = false)
@@ -59,6 +62,11 @@ public class User {
     @ToString.Exclude
     @JsonIgnore
     private List<Like> likes;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Comment> comments;
 
     @Transactional
     public void follow(User other) {
@@ -98,5 +106,15 @@ public class User {
     @Transactional
     public void removeLike(Like like) {
         this.likes.remove(like);
+    }
+
+    @Transactional
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
+    @Transactional
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
     }
 }

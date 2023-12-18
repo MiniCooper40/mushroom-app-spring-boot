@@ -1,6 +1,8 @@
 package com.mushroomapp.app.controller.post;
 
 import com.mushroomapp.app.controller.FirebaseRequestReader;
+import com.mushroomapp.app.controller.format.response.PostCreationResponse;
+import com.mushroomapp.app.controller.format.response.PostDeletionResponse;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.model.storage.Directory;
@@ -11,6 +13,7 @@ import net.bytebuddy.utility.RandomString;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,7 +68,7 @@ public class PostController {
     }
 
     @PostMapping("/")
-    public PostResponse uploadPost(@RequestParam("file") MultipartFile[] files, @RequestParam("caption") String caption, HttpServletRequest request) throws IOException {
+    public ResponseEntity<PostCreationResponse> uploadPost(@RequestParam("file") MultipartFile[] files, @RequestParam("caption") String caption, HttpServletRequest request) throws IOException {
         System.out.println("In upload post. Caption is: " + caption);
 
         String token = this.firebaseRequestReader.getId(request);
@@ -84,7 +87,12 @@ public class PostController {
 
         Post posted = this.postService.createPost(user.get(), mediaInPost, caption);
 
-        return new PostResponse(posted.getId());
+        PostCreationResponse response = PostCreationResponse
+                .builder()
+                .postId(posted.getId())
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/user/{id}")
@@ -107,7 +115,13 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletePost(@PathVariable UUID id) {
+    public ResponseEntity<PostDeletionResponse> deletePost(@PathVariable UUID id) {
         this.postService.deletePostById(id);
+        PostDeletionResponse response = PostDeletionResponse
+                .builder()
+                .postId(id)
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 }
