@@ -1,8 +1,13 @@
 package com.mushroomapp.app.service;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +19,23 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    public Optional<User> currentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String token = authentication.getName();
+
+        try {
+            UserRecord userRecord = FirebaseAuth.getInstance().getUser(token);
+            String uid = userRecord.getUid();
+
+            return this.userRepository.findByToken(uid);
+        } catch(Exception e) {
+            return Optional.empty();
+        }
+    }
     public User save(User user) {
         return this.userRepository.save(user);
     }

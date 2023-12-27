@@ -71,11 +71,9 @@ public class PostController {
     public ResponseEntity<PostCreationResponse> uploadPost(@RequestParam("file") MultipartFile[] files, @RequestParam("caption") String caption, HttpServletRequest request) throws IOException {
         System.out.println("In upload post. Caption is: " + caption);
 
-        String token = this.firebaseRequestReader.getId(request);
+        Optional<User> user = this.userService.currentUser();
 
-        Optional<User> user = this.userService.getUserByToken(token);
-
-        if(user.isEmpty()) throw new NoSuchElementException("could not find user with token " + token);
+        if(user.isEmpty()) throw new NoSuchElementException("could not identify current user");
 
         List<Media> mediaInPost = Arrays.stream(files).map(f -> {
             try {
@@ -100,6 +98,18 @@ public class PostController {
         Optional<User> user = this.userService.getUserById(id);
 
         if(user.isEmpty()) throw new BadRequestException("User does not exist with ID: " + id);
+
+        System.out.println("In PostController. Users posts are: " + user.get().getPosts());
+        System.out.println("And user is " + user.get());
+
+        return user.get().getPosts();
+    }
+
+    @GetMapping("/user")
+    public List<Post> postsForCurrentUser() throws BadRequestException {
+        Optional<User> user = this.userService.currentUser();
+
+        if(user.isEmpty()) throw new BadRequestException("Could not determine current user");
 
         System.out.println("In PostController. Users posts are: " + user.get().getPosts());
         System.out.println("And user is " + user.get());

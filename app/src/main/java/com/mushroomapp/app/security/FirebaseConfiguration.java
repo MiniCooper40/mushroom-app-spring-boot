@@ -1,4 +1,4 @@
-package com.mushroomapp.app.auth;
+package com.mushroomapp.app.security;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Configuration
@@ -18,7 +17,7 @@ public class FirebaseConfiguration {
     @Bean
     public FirebaseApp createFireBaseApp() throws IOException {
         FileInputStream serviceAccount =
-                new FileInputStream("C:\\Users\\ratbo\\Documents\\Code\\SpringBoot\\mushroom-v1\\app\\src\\main\\java\\com\\mushroomapp\\app\\auth\\serviceAccountKey.json");
+                new FileInputStream("C:\\Users\\ratbo\\Documents\\Code\\SpringBoot\\mushroom-v1\\app\\src\\main\\java\\com\\mushroomapp\\app\\security\\serviceAccountKey.json");
 
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))

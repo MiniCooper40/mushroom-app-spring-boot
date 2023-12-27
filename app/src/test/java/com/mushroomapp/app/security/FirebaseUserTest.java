@@ -1,4 +1,4 @@
-package com.mushroomapp.app.auth;
+package com.mushroomapp.app.security;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;

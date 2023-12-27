@@ -1,6 +1,10 @@
 package com.mushroomapp.app.controller;
 
 import com.google.api.gax.rpc.NotFoundException;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import com.mushroomapp.app.controller.format.request.UserCreationRequest;
 import com.mushroomapp.app.controller.format.response.FollowUserResponse;
 import com.mushroomapp.app.controller.format.response.UnfollowUserResponse;
@@ -10,6 +14,8 @@ import com.mushroomapp.app.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -31,14 +37,22 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserCreationResponse> createUser(@RequestBody UserCreationRequest userCreationRequest, HttpServletRequest httpRequest) throws SQLException {
+    public ResponseEntity<UserCreationResponse> createUser(@RequestBody UserCreationRequest userCreationRequest, HttpServletRequest httpRequest) throws SQLException, FirebaseAuthException {
 
-        String token = this.httpRequestReader.getId(httpRequest);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String uid = authentication.getName();
+
+        System.out.println("In createUser w/ uid " + uid);
+
+        UserRecord userRecord = FirebaseAuth.getInstance().getUser(uid);
+
         String username = userCreationRequest.username;
+        String email = userRecord.getEmail();
 
         User user = new User();
+        user.setToken(uid);
         user.setUsername(username);
-        user.setToken(token);
+        user.setEmail(email);
 
         try {
             User createdUser = this.userService.save(user);
@@ -90,10 +104,8 @@ public class UserController {
     @PostMapping("/follow/{id}")
     public ResponseEntity<FollowUserResponse> userFollowsUser(@PathVariable UUID id, HttpServletRequest request) throws BadRequestException {
 
-        String token = httpRequestReader.getId(request);
-
-        Optional<User> currentUser = this.userService.getUserByToken(token);
-        if (currentUser.isEmpty()) throw new NoSuchElementException("User does not exist with token " + token);
+        Optional<User> currentUser = this.userService.currentUser();
+        if (currentUser.isEmpty()) throw new NoSuchElementException("Could not identify current user");
 
         Optional<User> userToFollow = this.userService.getUserById(id);
         if (userToFollow.isEmpty()) throw new BadRequestException("User does not exist with id " + id);
@@ -154,5 +166,13 @@ public class UserController {
         if(user.isEmpty()) throw new NoSuchElementException("could not find user with id " + id);
 
         return ResponseEntity.ok(user.get().getFollowers());
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<User> getCurrentUser(HttpServletRequest request) {
+        Optional<User> user = this.userService.currentUser();
+
+        if(user.isPresent()) return ResponseEntity.ok(user.get());
+        throw new NoSuchElementException("current user does not have a valid session");
     }
 }

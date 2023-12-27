@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.interaction.Comment;
 import com.mushroomapp.app.model.interaction.Like;
+import com.mushroomapp.app.model.storage.Media;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
@@ -33,6 +34,9 @@ public class User {
 
     @Column(name = "username", unique = true, nullable = false)
     private String username;
+
+    @Column(name="email", unique = true, nullable = true)
+    private String email;
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
@@ -68,6 +72,10 @@ public class User {
     @JsonIgnore
     private List<Comment> comments;
 
+    @OneToOne
+    @JoinColumn(name = "profile_picture_id")
+    private Media profilePicture;
+
     @Transactional
     public void follow(User other) {
         this.following.add(other);
@@ -90,6 +98,7 @@ public class User {
 
     @Transactional
     public void addPost(Post post) {
+        if(posts == null) this.posts = new LinkedList<>();
         this.posts.add(post);
     }
 
