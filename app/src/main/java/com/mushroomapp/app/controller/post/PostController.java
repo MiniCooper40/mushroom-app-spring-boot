@@ -1,6 +1,7 @@
 package com.mushroomapp.app.controller.post;
 
 import com.mushroomapp.app.controller.FirebaseRequestReader;
+import com.mushroomapp.app.controller.format.response.ExploreFeed;
 import com.mushroomapp.app.controller.format.response.PostCreationResponse;
 import com.mushroomapp.app.controller.format.response.PostDeletionResponse;
 import com.mushroomapp.app.model.content.Post;
@@ -94,7 +95,7 @@ public class PostController {
     }
 
     @GetMapping("/user/{id}")
-    public List<Post> postsForUser(@PathVariable UUID id) throws BadRequestException {
+    public ResponseEntity<ExploreFeed> postsForUser(@PathVariable UUID id) throws BadRequestException {
         Optional<User> user = this.userService.getUserById(id);
 
         if(user.isEmpty()) throw new BadRequestException("User does not exist with ID: " + id);
@@ -102,11 +103,15 @@ public class PostController {
         System.out.println("In PostController. Users posts are: " + user.get().getPosts());
         System.out.println("And user is " + user.get());
 
-        return user.get().getPosts();
+        return ResponseEntity.ok(
+                new ExploreFeed(
+                        user.get().getPosts()
+                )
+        );
     }
 
     @GetMapping("/user")
-    public List<Post> postsForCurrentUser() throws BadRequestException {
+    public ResponseEntity<ExploreFeed> postsForCurrentUser() throws BadRequestException {
         Optional<User> user = this.userService.currentUser();
 
         if(user.isEmpty()) throw new BadRequestException("Could not determine current user");
@@ -114,7 +119,11 @@ public class PostController {
         System.out.println("In PostController. Users posts are: " + user.get().getPosts());
         System.out.println("And user is " + user.get());
 
-        return user.get().getPosts();
+        return ResponseEntity.ok(
+                new ExploreFeed(
+                        user.get().getPosts()
+                )
+        );
     }
 
     @GetMapping("/{id}")

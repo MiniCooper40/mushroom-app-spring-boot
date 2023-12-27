@@ -31,29 +31,47 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     private PostService postService;
 
+    Directory d;
+
     private User createUser() {
+        d = createDirectory();
         User u = new User();
         u.setEmail("mcdavidfan97@gmail.com");
         u.setUsername("testUser");
         u.setToken("7mzLyTH5yUhxuVBQwjg8ASTIszs1");
+        u.setBio("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.");
+        u.setProfilePicture(
+                createProfilePicture()
+        );
 
         userService.save(u);
 
         return u;
     }
 
+    private Media createProfilePicture() {
+        Media m = new Media();
+        m.setFilename("nCFYysKDX1hUfsp.jpg");
+        m.setDirectory(d);
+
+        mediaService.save(m);
+        d.addMedia(m);
+
+        return m;
+    }
+
     private Directory createDirectory() {
-        return directoryService.save("C:\\Users\\ratbo\\Pictures\\");
+        return directoryService.save("media/");
     }
     private List<Media> createPostMedia() {
-        Directory d = createDirectory();
+//        Directory d = createDirectory();
 
         Media m1 = new Media();
-        m1.setFilename("black-chicken-1.jpg");
+        m1.setFilename("dczANALPsbKetHQ.jpg");
         m1.setDirectory(d);
 
         Media m2 = new Media();
-        m2.setFilename("black-chicken-1.jpg");
+        m2.setFilename("GLkPP6z4VSY5Cap.jpg");
         m2.setDirectory(d);
 
         d.addMedia(m1);

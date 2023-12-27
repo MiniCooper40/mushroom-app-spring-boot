@@ -2,6 +2,9 @@ package com.mushroomapp.app.model.profile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mushroomapp.app.controller.format.serialize.SerializeListToLength;
+import com.mushroomapp.app.controller.format.serialize.SerializeMediaToPath;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.interaction.Comment;
 import com.mushroomapp.app.model.interaction.Like;
@@ -55,7 +58,7 @@ public class User {
 
     @ManyToMany(mappedBy = "following")
     @ToString.Exclude
-    @JsonIgnore
+    @JsonSerialize(using = SerializeListToLength.class)
     private List<User> followers = new LinkedList<>();
 
     @Column(name = "created_on", updatable = false)
@@ -64,17 +67,21 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    @JsonIgnore
+    @JsonSerialize(using = SerializeListToLength.class)
     private List<Like> likes;
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    @JsonIgnore
+    @JsonSerialize(using = SerializeListToLength.class)
     private List<Comment> comments;
 
     @OneToOne
     @JoinColumn(name = "profile_picture_id")
+    @JsonSerialize(using = SerializeMediaToPath.class)
     private Media profilePicture;
+
+    @Column(name = "bio")
+    private String bio;
 
     @Transactional
     public void follow(User other) {

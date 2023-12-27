@@ -28,8 +28,8 @@ public class PostService {
     @Transactional
     public Post createPost(User user, List<Media> media, String caption) {
         Post post = new Post();
-
-        post.setUser(user); // User adds post, post sets its user
+        post.setCaption(caption);
+        post.setUser(user);
         postRepository.save(post);
 
         user.addPost(post);

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mushroomapp.app.controller.format.serialize.PostSerializer;
 import com.mushroomapp.app.model.interaction.Comment;
 import com.mushroomapp.app.model.interaction.Like;
 import com.mushroomapp.app.model.profile.User;
@@ -24,6 +26,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @ToString
+@JsonSerialize(using = PostSerializer.class)
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -54,6 +57,9 @@ public class Post {
     @Column(name = "created_on", updatable = false)
     @CreationTimestamp
     private LocalDateTime timestamp;
+
+    @Column(name = "caption")
+    private String caption;
 
     @Transactional
     public void addPostMedia(PostMedia postMedia) {

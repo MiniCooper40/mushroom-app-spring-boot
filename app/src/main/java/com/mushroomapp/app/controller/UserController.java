@@ -170,6 +170,7 @@ public class UserController {
 
     @GetMapping("/user")
     public ResponseEntity<User> getCurrentUser(HttpServletRequest request) {
+        System.out.println("in getCurrentUser");
         Optional<User> user = this.userService.currentUser();
 
         if(user.isPresent()) return ResponseEntity.ok(user.get());
