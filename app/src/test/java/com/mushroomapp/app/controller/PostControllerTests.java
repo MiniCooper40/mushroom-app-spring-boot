@@ -429,7 +429,7 @@ public class PostControllerTests {
         this.commentResponse = postComment(webClient, commentRequest, userToken2);
 
         List<Comment> usersCommentsAfterCommenting = getUsersComments(webClient, userToken2);
-        System.out.println("comment response: " + this.commentResponse.commentId);
+        System.out.println("comment response: " + this.commentResponse.comment.getId());
 
         assertThat(usersCommentsAfterCommenting).size().isEqualTo(1);
         assertThat(usersCommentsAfterCommenting).map(Comment::getRespondedTo).containsOnlyNulls();
@@ -464,8 +464,8 @@ public class PostControllerTests {
 
     @Test
     public void deleteComment() {
-        System.out.println("comment response in delete comment: " + this.commentResponse.commentId);
-        CommentDeletionResponse commentDeletion = deleteComment(webClient, commentResponse.commentId, userToken2);
+        System.out.println("comment response in delete comment: " + this.commentResponse.getComment().getId());
+        CommentDeletionResponse commentDeletion = deleteComment(webClient, commentResponse.getComment().getId(), userToken2);
 
         List<Comment> usersCommentsAfterCommenting = getUsersComments(webClient, userToken2);
 

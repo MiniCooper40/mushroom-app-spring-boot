@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserCreationResponse> createUser(@RequestBody UserCreationRequest userCreationRequest, HttpServletRequest httpRequest) throws SQLException, FirebaseAuthException {
+    public ResponseEntity<User> createUser(@RequestBody UserCreationRequest userCreationRequest, HttpServletRequest httpRequest) throws SQLException, FirebaseAuthException {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String uid = authentication.getName();
@@ -59,12 +59,8 @@ public class UserController {
 
             System.out.println("Created user " + createdUser);
 
-            UserCreationResponse response = UserCreationResponse
-                    .builder()
-                    .userId(createdUser.getId())
-                    .build();
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(createdUser);
         } catch (Exception e) {
             throw new SQLException("could not insert user: " + userCreationRequest.username);
         }
@@ -169,7 +165,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<User> getCurrentUser(HttpServletRequest request) {
+    public ResponseEntity<User> getCurrentUser() {
         System.out.println("in getCurrentUser");
         Optional<User> user = this.userService.currentUser();
 

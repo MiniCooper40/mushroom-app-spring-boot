@@ -14,6 +14,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -33,25 +34,36 @@ public class DataLoader implements ApplicationRunner {
 
     Directory d;
 
-    private User createUser() {
-        d = createDirectory();
+    List<String> filepaths = List.of(
+            "mushroom1.jpg",
+            "mushroom2.jpg",
+            "mushroom3.jpg",
+            "mushroom4.jpg",
+            "mushroom5.png"
+    );
+
+    private User createUser(
+            String username,
+            String email,
+            String token,
+            String bio,
+            Media profilePicture
+    ) {
         User u = new User();
-        u.setEmail("mcdavidfan97@gmail.com");
-        u.setUsername("testUser");
-        u.setToken("7mzLyTH5yUhxuVBQwjg8ASTIszs1");
-        u.setBio("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.");
-        u.setProfilePicture(
-                createProfilePicture()
-        );
+        u.setEmail(email);
+        u.setUsername(username);
+        u.setToken(token);
+        u.setBio(bio);
+        u.setProfilePicture(profilePicture);
 
         userService.save(u);
 
         return u;
     }
 
-    private Media createProfilePicture() {
+    private Media createProfilePicture(String file) {
         Media m = new Media();
-        m.setFilename("nCFYysKDX1hUfsp.jpg");
+        m.setFilename(file);
         m.setDirectory(d);
 
         mediaService.save(m);
@@ -63,37 +75,73 @@ public class DataLoader implements ApplicationRunner {
     private Directory createDirectory() {
         return directoryService.save("media/");
     }
-    private List<Media> createPostMedia() {
+    private List<Media> createPostMedia(List<String> files) {
 //        Directory d = createDirectory();
 
-        Media m1 = new Media();
-        m1.setFilename("dczANALPsbKetHQ.jpg");
-        m1.setDirectory(d);
+        List<Media> media = new LinkedList<>();
 
-        Media m2 = new Media();
-        m2.setFilename("GLkPP6z4VSY5Cap.jpg");
-        m2.setDirectory(d);
+        for(String file : files) {
+            Media m = new Media();
+            m.setFilename(file);
+            m.setDirectory(d);
+            d.addMedia(m);
+            media.add(m);
+        }
 
-        d.addMedia(m1);
-        d.addMedia(m2);
+//        Media m1 = new Media();
+//        m1.setFilename("dczANALPsbKetHQ.jpg");
+//        m1.setDirectory(d);
+//
+//        Media m2 = new Media();
+//        m2.setFilename("GLkPP6z4VSY5Cap.jpg");
+//        m2.setDirectory(d);
+//
+//        d.addMedia(m1);
+//        d.addMedia(m2);
 
-        return List.of(m1,m2);
+        return media;
     }
 
-    private Post createPost() {
-        User u = createUser();
-        List<Media> m = createPostMedia();
+    private Post createPost(User u, List<String> files) {
+        List<Media> m = createPostMedia(files);
 
         return postService.createPost(
                 u,
                 m,
-                "This is a post!"
+                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."
         );
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        createPost();
+
+        d = createDirectory();
+
+        createProfilePicture("default-profile-picture.png");
+
+        createPost(
+                createUser(
+                        "Test 123",
+                        "mcdavidfan97@gmail.com",
+                        "7mzLyTH5yUhxuVBQwjg8ASTIszs1",
+                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+                        createProfilePicture(filepaths.get(0))
+                ),
+                filepaths.subList(0,4)
+        );
+
+        createPost(
+                createUser(
+                        "Test ABC",
+                        "testperson@gmail.com",
+                        "2131hj2943u01294j",
+                        "\"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\"",
+                        createProfilePicture(filepaths.get(4))
+                ),
+                filepaths.subList(2,4)
+        );
+
+
         System.out.println("created post");
     }
 }

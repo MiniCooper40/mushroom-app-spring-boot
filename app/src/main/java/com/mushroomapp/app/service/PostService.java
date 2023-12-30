@@ -1,5 +1,6 @@
 package com.mushroomapp.app.service;
 
+import com.mushroomapp.app.controller.format.response.ExploreFeed;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.content.PostMedia;
 import com.mushroomapp.app.model.profile.User;
@@ -7,6 +8,7 @@ import com.mushroomapp.app.model.storage.Media;
 import com.mushroomapp.app.repository.PostRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,6 +49,11 @@ public class PostService {
         return this.postRepository.save(post);
     }
 
+    public List<Post> findMostRecent() {
+        return this.postRepository.findTop10ByOrderByTimestampDesc();
+    }
+
+    @Transactional
     public Optional<Post> findPostById(UUID postId) {
         return this.postRepository.findById(postId);
     }

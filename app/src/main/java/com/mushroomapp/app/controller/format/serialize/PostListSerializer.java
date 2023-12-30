@@ -5,14 +5,31 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.content.PostMedia;
+import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.model.storage.Media;
+import com.mushroomapp.app.service.InteractionService;
+import com.mushroomapp.app.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
+@Component
 public class PostListSerializer extends JsonSerializer<List<Post>> {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private InteractionService interactionService;
+
     @Override
     public void serialize(List<Post> posts, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+
+        Optional<User> user = userService.currentUser();
+
         jsonGenerator.writeStartArray();
         for(Post p : posts) {
             jsonGenerator.writeStartObject();
@@ -20,6 +37,23 @@ public class PostListSerializer extends JsonSerializer<List<Post>> {
             jsonGenerator.writeStringField("user_id", p.getUser().getId().toString());
             jsonGenerator.writeNumberField("likes", p.getLikes().size());
             jsonGenerator.writeNumberField("comments", p.getComments().size());
+            jsonGenerator.writeStringField("caption", p.getCaption());
+            jsonGenerator.writeStringField("timestamp", p.getTimestamp().toString());
+            jsonGenerator.writeStringField("username", p.getUser().getUsername());
+
+
+            if(user.isEmpty()) jsonGenerator.writeBooleanField("user_likes", false);
+            else jsonGenerator.writeBooleanField(
+                    "user_likes",
+                    this.interactionService.userLikesPost(
+                            user.get(),
+                            p
+                    )
+            );
+
+            String profilePictureFilename = p.getUser().getProfilePicture().getFilename();
+            String profilePictureDirectoryPath = p.getUser().getProfilePicture().getDirectory().getPath();
+            jsonGenerator.writeStringField("profile_picture", profilePictureDirectoryPath+profilePictureFilename);
 
             JsonSerializer<Media> mediaJsonSerializer = new SerializeMediaToPath();
             jsonGenerator.writeArrayFieldStart("media");
@@ -31,6 +65,7 @@ public class PostListSerializer extends JsonSerializer<List<Post>> {
                 jsonGenerator.writeStringField("source", directoryPath+filename);
                 jsonGenerator.writeNumberField("position", pm.getPosition());
                 jsonGenerator.writeStringField("id", media.getId().toString());
+
                 jsonGenerator.writeEndObject();
             }
             jsonGenerator.writeEndArray();

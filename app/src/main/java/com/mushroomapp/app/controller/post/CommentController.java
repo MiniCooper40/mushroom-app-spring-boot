@@ -4,6 +4,7 @@ import com.mushroomapp.app.controller.FirebaseRequestReader;
 import com.mushroomapp.app.controller.format.request.CommentCreationRequest;
 import com.mushroomapp.app.controller.format.response.CommentCreationResponse;
 import com.mushroomapp.app.controller.format.response.CommentDeletionResponse;
+import com.mushroomapp.app.controller.format.response.CommentSection;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.interaction.Comment;
 import com.mushroomapp.app.model.profile.User;
@@ -36,16 +37,18 @@ public class CommentController {
     private final FirebaseRequestReader firebaseRequestReader = new FirebaseRequestReader();
 
     @PostMapping
-    public ResponseEntity<?> createComment(@RequestBody CommentCreationRequest commentCreationRequest, HttpServletRequest request) {
+    public ResponseEntity<CommentCreationResponse> createComment(@RequestBody CommentCreationRequest commentCreationRequest, HttpServletRequest request) {
+        System.out.println("in createComment" + commentCreationRequest);
         String content = commentCreationRequest.content;
         UUID postId = commentCreationRequest.postId;
-        String userToken = firebaseRequestReader.getId(request);
 
-        Optional<User> user = this.userService.getUserByToken(userToken);
-        if(user.isEmpty()) throw new NoSuchElementException("could not find a user with token " + userToken);
+        Optional<User> user = this.userService.currentUser();
+        if(user.isEmpty()) throw new NoSuchElementException("could not identify the current user");
 
         Optional<Post> post = this.postService.findPostById(postId);
         if(post.isEmpty()) throw new NoSuchElementException("could not find a post with id " + postId);
+
+        System.out.println("found post for comment" + post.get());
 
         Comment comment = new Comment();
         comment.setContent(content);
@@ -58,35 +61,40 @@ public class CommentController {
                         commentCreationRequest.respondedToId
                 );
 
-        if(commentRespondedTo.isPresent()) comment.setRespondedTo(commentRespondedTo.get());
+        commentRespondedTo.ifPresent(comment::setRespondedTo);
 
-        comment = this.interactionService.saveComment(comment);
+        this.interactionService.saveComment(comment);
 
-        if(commentRespondedTo.isPresent()) commentRespondedTo.get().addResponse(comment);
+        commentRespondedTo.ifPresent(value -> value.addResponse(comment));
 
         post.get().addComment(comment);
         user.get().addComment(comment);
 
         CommentCreationResponse response = CommentCreationResponse
                 .builder()
-                .commentId(comment.getId())
+                .comment(comment)
                 .build();
+
+        System.out.println("created response for comment, " + comment);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/post/{id}")
-    public ResponseEntity<List<Comment>> getAllCommentsOnPost(@PathVariable UUID id) {
+    public ResponseEntity<CommentSection> getAllCommentsOnPost(@PathVariable UUID id) {
+        System.out.println(" in getAllCommentsOnPost");
         Optional<Post> post = this.postService.findPostById(id);
 
         if(post.isEmpty()) throw new NoSuchElementException("could not find post with id " + id);
         return ResponseEntity.ok(
-                post.get().getComments()
+                new CommentSection(
+                        post.get().getComments()
+                )
         );
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteComment(@PathVariable UUID id, HttpServletRequest request) {
+    public ResponseEntity<CommentDeletionResponse> deleteComment(@PathVariable UUID id, HttpServletRequest request) {
 
         String userToken = firebaseRequestReader.getId(request);
 

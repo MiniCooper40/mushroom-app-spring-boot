@@ -6,6 +6,7 @@ import com.mushroomapp.app.model.interaction.Like;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.repository.CommentRepository;
 import com.mushroomapp.app.repository.LikeRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -61,5 +62,14 @@ public class InteractionService {
 
     public Optional<Comment> findCommentById(UUID commentId) {
         return this.commentRepository.findById(commentId);
+    }
+
+    public boolean userLikesPost(User user, Post post) {
+        return this.likeRepository.existsByUserAndPost(user, post);
+    }
+
+    @Transactional
+    public void deleteLikeByUserAndPost(User user, Post post) {
+        this.likeRepository.deleteByUserAndPost(user, post);
     }
 }

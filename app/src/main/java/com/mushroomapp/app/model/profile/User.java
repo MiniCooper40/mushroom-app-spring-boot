@@ -73,9 +73,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     @JsonSerialize(using = SerializeListToLength.class)
-    private List<Comment> comments;
+    private List<Comment> comments = new LinkedList<>();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "profile_picture_id")
     @JsonSerialize(using = SerializeMediaToPath.class)
     private Media profilePicture;
@@ -132,5 +132,10 @@ public class User {
     @Transactional
     public void removeComment(Comment comment) {
         this.comments.remove(comment);
+    }
+
+    @Transient
+    public String getProfilePicturePath() {
+        return this.profilePicture.getPath();
     }
 }

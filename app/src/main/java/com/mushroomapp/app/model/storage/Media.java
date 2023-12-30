@@ -37,4 +37,9 @@ public class Media {
 
     @Column(name = "filename")
     private String filename;
+
+    @Transient
+    public String getPath() {
+        return this.directory.getPath() + this.getFilename();
+    }
 }

@@ -143,4 +143,13 @@ public class PostController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/explore")
+    public ResponseEntity<ExploreFeed> findMostRecent() {
+        return ResponseEntity.ok(
+                new ExploreFeed(
+                        this.postService.findMostRecent()
+                )
+        );
+    }
 }

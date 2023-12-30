@@ -1,15 +1,16 @@
 package com.mushroomapp.app.model.interaction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mushroomapp.app.controller.format.serialize.CommentSerializer;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.model.content.Post;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@JsonSerialize(using = CommentSerializer.class)
 //@IdClass(InteractionId.class)
 public class Comment {
 
@@ -48,10 +51,12 @@ public class Comment {
     private String content;
 
     @Column(name = "timestamp")
+    @CreationTimestamp
     private LocalDateTime timestamp;
 
     @OneToMany(mappedBy = "respondedTo")
-    private List<Comment> responses;
+    @ToString.Exclude
+    private List<Comment> responses = new LinkedList<>();
 
     @ManyToOne
     @JoinColumn(name = "comment_responded_to_id")

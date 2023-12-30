@@ -37,18 +37,33 @@ public class LikeController {
 
     @PostMapping("/{id}")
     public ResponseEntity<LikeCreationResponse> likePost(@PathVariable UUID id, HttpServletRequest request) {
-        String token = requestReader.getId(request);
-        Optional<User> user = this.userService.getUserByToken(token);
 
-        if(user.isEmpty()) throw new NoSuchElementException("user does not exist with token " + token);
+        Optional<User> user = this.userService.currentUser();
+        System.out.println("in likePost w/" + user);
+
+        if(user.isEmpty()) throw new NoSuchElementException("cannot identify requesting user");
 
         Optional<Post> post = this.postService.findPostById(id);
         if(post.isEmpty()) throw new NoSuchElementException("post does not exist with id " + id);
 
-        this.interactionService.likePost(
+        if(this.interactionService.userLikesPost(
                 user.get(),
                 post.get()
-        );
+        )) {
+            System.out.println("deleted like");
+            this.interactionService.deleteLikeByUserAndPost(
+                    user.get(),
+                    post.get()
+            );
+        }
+
+        else {
+            System.out.println("created like");
+            this.interactionService.likePost(
+                    user.get(),
+                    post.get()
+            );
+        }
 
         LikeCreationResponse response = LikeCreationResponse
                 .builder()

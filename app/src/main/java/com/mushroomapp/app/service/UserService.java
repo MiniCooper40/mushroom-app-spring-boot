@@ -4,8 +4,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import com.mushroomapp.app.model.profile.User;
+import com.mushroomapp.app.model.storage.Media;
 import com.mushroomapp.app.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,11 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private MediaService mediaService;
 
     public Optional<User> currentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -37,6 +39,10 @@ public class UserService {
         }
     }
     public User save(User user) {
+        if(user.getProfilePicture() == null) {
+            Optional<Media> profilePicture = this.mediaService.getMediaByFilename("default-profile-picture.png");
+            profilePicture.ifPresent(user::setProfilePicture);
+        }
         return this.userRepository.save(user);
     }
 

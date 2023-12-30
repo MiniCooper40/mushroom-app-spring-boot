@@ -6,11 +6,25 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.content.PostMedia;
+import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.model.storage.Media;
+import com.mushroomapp.app.service.InteractionService;
+import com.mushroomapp.app.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Optional;
 
+@Component
 public class PostSerializer extends JsonSerializer<Post> {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private InteractionService interactionService;
+
     @Override
     public void serialize(Post post, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
@@ -37,10 +51,20 @@ public class PostSerializer extends JsonSerializer<Post> {
         jsonGenerator.writeStringField("timestamp", post.getTimestamp().toString());
         jsonGenerator.writeStringField("caption", post.getCaption());
 
-        Media profilePicture = post.getUser().getProfilePicture();
-        String profilePicturePath = profilePicture.getDirectory().getPath() + profilePicture.getFilename();
+        Optional<User> user = userService.currentUser();
+        if(user.isEmpty()) jsonGenerator.writeBooleanField("user_likes", false);
+        else jsonGenerator.writeBooleanField(
+                "user_likes",
+                this.interactionService.userLikesPost(
+                        user.get(),
+                        post
+                )
+        );
 
-        jsonGenerator.writeStringField("profile_picture", profilePicturePath);
+//        Media profilePicture = post.getUser().getProfilePicture();
+//        String profilePicturePath = profilePicture.getDirectory().getPath() + profilePicture.getFilename();
+
+        jsonGenerator.writeStringField("profile_picture", post.getUser().getProfilePicturePath());
 
         jsonGenerator.writeEndObject();
     }
