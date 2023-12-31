@@ -6,12 +6,16 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mushroomapp.app.controller.format.response.CommentSection;
 import com.mushroomapp.app.model.interaction.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class CommentSectionSerializer extends JsonSerializer<CommentSection> {
 
-    private final CommentSerializer commentSerializer = new CommentSerializer();
+    @Autowired
+    private CommentSerializer commentSerializer;
 
     @Override
     public void serialize(CommentSection commentSection, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {

@@ -3,6 +3,7 @@ package com.mushroomapp.app.controller.format.serialize;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.mushroomapp.app.aws.AwsService;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.content.PostMedia;
 import com.mushroomapp.app.model.profile.User;
@@ -24,6 +25,9 @@ public class PostListSerializer extends JsonSerializer<List<Post>> {
 
     @Autowired
     private InteractionService interactionService;
+
+    @Autowired
+    private AwsService awsService;
 
     @Override
     public void serialize(List<Post> posts, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
@@ -51,18 +55,18 @@ public class PostListSerializer extends JsonSerializer<List<Post>> {
                     )
             );
 
-            String profilePictureFilename = p.getUser().getProfilePicture().getFilename();
-            String profilePictureDirectoryPath = p.getUser().getProfilePicture().getDirectory().getPath();
-            jsonGenerator.writeStringField("profile_picture", profilePictureDirectoryPath+profilePictureFilename);
+//            String profilePictureFilename = p.getUser().getProfilePicture().getFilename();
+//            String profilePictureDirectoryPath = p.getUser().getProfilePicture().getDirectory().getPath();
+            jsonGenerator.writeStringField("profile_picture", this.awsService.getSignedUrlForProfilePicture(p.getUser()));
 
             JsonSerializer<Media> mediaJsonSerializer = new SerializeMediaToPath();
             jsonGenerator.writeArrayFieldStart("media");
             for(PostMedia pm : p.getMedia()) {
                 jsonGenerator.writeStartObject();
                 Media media = pm.getMedia();
-                String filename = media.getFilename();
-                String directoryPath = media.getDirectory().getPath();
-                jsonGenerator.writeStringField("source", directoryPath+filename);
+//                String filename = media.getFilename();
+//                String directoryPath = media.getDirectory().getPath();
+                jsonGenerator.writeStringField("source", this.awsService.getSignedUrlForMedia(media));
                 jsonGenerator.writeNumberField("position", pm.getPosition());
                 jsonGenerator.writeStringField("id", media.getId().toString());
 

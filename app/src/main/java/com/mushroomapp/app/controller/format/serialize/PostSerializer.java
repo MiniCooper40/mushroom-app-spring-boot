@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mushroomapp.app.aws.AwsService;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.content.PostMedia;
 import com.mushroomapp.app.model.profile.User;
@@ -25,6 +26,9 @@ public class PostSerializer extends JsonSerializer<Post> {
     @Autowired
     private InteractionService interactionService;
 
+    @Autowired
+    private AwsService awsService;
+
     @Override
     public void serialize(Post post, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
@@ -35,7 +39,7 @@ public class PostSerializer extends JsonSerializer<Post> {
             Media media = pm.getMedia();
             String filename = media.getFilename();
             String directoryPath = media.getDirectory().getPath();
-            jsonGenerator.writeStringField("source", directoryPath+filename);
+            jsonGenerator.writeStringField("source", this.awsService.getSignedUrlForMedia(media));
             jsonGenerator.writeNumberField("position", pm.getPosition());
             jsonGenerator.writeStringField("id", media.getId().toString());
             jsonGenerator.writeEndObject();
@@ -64,7 +68,7 @@ public class PostSerializer extends JsonSerializer<Post> {
 //        Media profilePicture = post.getUser().getProfilePicture();
 //        String profilePicturePath = profilePicture.getDirectory().getPath() + profilePicture.getFilename();
 
-        jsonGenerator.writeStringField("profile_picture", post.getUser().getProfilePicturePath());
+        jsonGenerator.writeStringField("profile_picture", this.awsService.getSignedUrlForProfilePicture(post.getUser()));
 
         jsonGenerator.writeEndObject();
     }

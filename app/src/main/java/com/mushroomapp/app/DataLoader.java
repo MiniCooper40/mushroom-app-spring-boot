@@ -73,7 +73,7 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private Directory createDirectory() {
-        return directoryService.save("media/");
+        return directoryService.save("static/");
     }
     private List<Media> createPostMedia(List<String> files) {
 //        Directory d = createDirectory();
@@ -87,17 +87,6 @@ public class DataLoader implements ApplicationRunner {
             d.addMedia(m);
             media.add(m);
         }
-
-//        Media m1 = new Media();
-//        m1.setFilename("dczANALPsbKetHQ.jpg");
-//        m1.setDirectory(d);
-//
-//        Media m2 = new Media();
-//        m2.setFilename("GLkPP6z4VSY5Cap.jpg");
-//        m2.setDirectory(d);
-//
-//        d.addMedia(m1);
-//        d.addMedia(m2);
 
         return media;
     }
