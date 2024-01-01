@@ -87,7 +87,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostCreationResponse> uploadPost(@RequestParam("files") MultipartFile[] files, @RequestParam("caption") String caption, HttpServletRequest request) throws IOException {
+    public ResponseEntity<Post> uploadPost(@RequestParam("files") MultipartFile[] files, @RequestParam("caption") String caption, HttpServletRequest request) throws IOException {
         System.out.println("In upload post. Caption is: " + caption);
 
         Optional<User> user = this.userService.currentUser();
@@ -104,12 +104,7 @@ public class PostController {
 
         Post posted = this.postService.createPost(user.get(), mediaInPost, caption);
 
-        PostCreationResponse response = PostCreationResponse
-                .builder()
-                .postId(posted.getId())
-                .build();
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(posted);
     }
 
 //    @PostMapping

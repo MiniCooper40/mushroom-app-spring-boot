@@ -35,6 +35,7 @@ import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -52,6 +53,14 @@ public class AwsService {
 
     private AWSCredentials credentials;
     private AmazonS3 s3;
+
+    private Cache<String, String> mediaUrlCache = new Cache<>();
+
+    private Date oneDayExpiry() {
+        return Date.from(
+                Instant.now().plus(1, ChronoUnit.DAYS)
+        );
+    }
 
     @PostConstruct
     public void postConstruct() {
@@ -86,19 +95,26 @@ public class AwsService {
     }
 
     public String getSignedUrlForObjectKey(String objectKey) {
-        Date expiration = Date.from(
-                Instant.now().plus(1, ChronoUnit.DAYS)
-        );
+
+        Optional<String> url = this.mediaUrlCache.get(objectKey);
+        if(url.isPresent()) return url.get();
 
         GeneratePresignedUrlRequest presignedUrlRequest = new GeneratePresignedUrlRequest(
                 BUCKET_NAME,
                 objectKey
         )
                 .withMethod(HttpMethod.GET)
-                .withExpiration(expiration);
+                .withExpiration(oneDayExpiry());
 
-        URL url = s3.generatePresignedUrl(presignedUrlRequest);
-        return url.toString();
+        URL presignedUrl = s3.generatePresignedUrl(presignedUrlRequest);
+
+        this.mediaUrlCache.add(
+                objectKey,
+                presignedUrl.toString(),
+                oneDayExpiry()
+        );
+
+        return presignedUrl.toString();
     }
 
     public PutObjectResult uploadFile(MultipartFile file, String filename) throws IOException {
