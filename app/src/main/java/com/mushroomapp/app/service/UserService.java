@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -60,6 +61,16 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    public boolean currentUserFollows(User user) {
+        Optional<User> currentUser =  this.currentUser();
+        if(currentUser.isPresent())
+            return currentUser
+                    .get()
+                    .getFollowing()
+                    .contains(user);
+        throw new NoSuchElementException("Could not identify the current user");
     }
 
     @Transactional

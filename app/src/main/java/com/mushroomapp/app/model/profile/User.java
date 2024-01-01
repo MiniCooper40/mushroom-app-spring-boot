@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mushroomapp.app.controller.format.serialize.SerializeListToLength;
 import com.mushroomapp.app.controller.format.serialize.SerializeMediaToPath;
+import com.mushroomapp.app.controller.format.serialize.UserSerializer;
 import com.mushroomapp.app.model.content.Post;
 import com.mushroomapp.app.model.interaction.Comment;
 import com.mushroomapp.app.model.interaction.Like;

@@ -8,6 +8,7 @@ import com.google.firebase.auth.UserRecord;
 import com.mushroomapp.app.controller.format.request.UserCreationRequest;
 import com.mushroomapp.app.controller.format.response.FollowUserResponse;
 import com.mushroomapp.app.controller.format.response.UnfollowUserResponse;
+import com.mushroomapp.app.controller.format.response.UserAccountResponse;
 import com.mushroomapp.app.controller.format.response.UserCreationResponse;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.service.UserService;
@@ -77,10 +78,20 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUser(@PathVariable UUID id) {
+    public ResponseEntity<UserAccountResponse> getUser(@PathVariable UUID id) {
 
         Optional<User> user = this.userService.getUserById(id);
-        if (user.isPresent()) return ResponseEntity.ok(user.get());
+        if (user.isPresent()) {
+            return ResponseEntity.ok(
+                    UserAccountResponse
+                            .builder()
+                            .userFollows(
+                                    this.userService.currentUserFollows(user.get())
+                            )
+                            .user(user.get())
+                            .build()
+            );
+        }
 
         throw new NoSuchElementException("user not found with id " + id);
     }
@@ -106,10 +117,22 @@ public class UserController {
         Optional<User> userToFollow = this.userService.getUserById(id);
         if (userToFollow.isEmpty()) throw new BadRequestException("User does not exist with id " + id);
 
-        userService.followUser(
-                currentUser.get(),
-                userToFollow.get()
-        );
+        if(
+                currentUser.get().getFollowing().contains(userToFollow.get())
+        ) {
+            this.userService.unfollowUser(
+                    currentUser.get(),
+                    userToFollow.get()
+            );
+            System.out.println("User unfollowed");
+        }
+        else {
+            this.userService.followUser(
+                    currentUser.get(),
+                    userToFollow.get()
+            );
+            System.out.println("User followed");
+        }
 
         FollowUserResponse response = FollowUserResponse
                 .builder()

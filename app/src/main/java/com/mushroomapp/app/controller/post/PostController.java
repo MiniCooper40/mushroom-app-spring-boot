@@ -88,7 +88,7 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<Post> uploadPost(@RequestParam("files") MultipartFile[] files, @RequestParam("caption") String caption, HttpServletRequest request) throws IOException {
-        System.out.println("In upload post. Caption is: " + caption);
+//        System.out.println("In upload post. Caption is: " + caption);
 
         Optional<User> user = this.userService.currentUser();
 

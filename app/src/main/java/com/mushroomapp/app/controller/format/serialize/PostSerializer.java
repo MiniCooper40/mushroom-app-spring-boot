@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Component
@@ -31,6 +32,7 @@ public class PostSerializer extends JsonSerializer<Post> {
 
     @Override
     public void serialize(Post post, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+
         jsonGenerator.writeStartObject();
 
         jsonGenerator.writeArrayFieldStart("media");
@@ -43,6 +45,7 @@ public class PostSerializer extends JsonSerializer<Post> {
             jsonGenerator.writeNumberField("position", pm.getPosition());
             jsonGenerator.writeStringField("id", media.getId().toString());
             jsonGenerator.writeEndObject();
+            System.out.println("added media " + media.getFilename());
         }
         jsonGenerator.writeEndArray();
 
@@ -64,9 +67,6 @@ public class PostSerializer extends JsonSerializer<Post> {
                         post
                 )
         );
-
-//        Media profilePicture = post.getUser().getProfilePicture();
-//        String profilePicturePath = profilePicture.getDirectory().getPath() + profilePicture.getFilename();
 
         jsonGenerator.writeStringField("profile_picture", this.awsService.getSignedUrlForProfilePicture(post.getUser()));
 

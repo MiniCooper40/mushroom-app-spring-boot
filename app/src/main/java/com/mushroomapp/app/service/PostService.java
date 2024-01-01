@@ -44,9 +44,11 @@ public class PostService {
 
             System.out.println("Post media: " + postMedia);
             postMediaService.save(postMedia);
+            post.addPostMedia(postMedia);
         }
 
-        return this.postRepository.save(post);
+        this.postRepository.save(post);
+        return post;
     }
 
     public List<Post> findMostRecent() {
