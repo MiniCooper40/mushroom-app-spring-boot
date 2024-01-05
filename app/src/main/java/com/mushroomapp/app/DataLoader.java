@@ -1,6 +1,10 @@
 package com.mushroomapp.app;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.mushroomapp.app.controller.format.deserialize.AiInsightDeserializer;
 import com.mushroomapp.app.model.content.Post;
+import com.mushroomapp.app.model.insight.AiInsight;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.model.storage.Directory;
 import com.mushroomapp.app.model.storage.Media;
@@ -13,6 +17,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +37,9 @@ public class DataLoader implements ApplicationRunner {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private AiInsightDeserializer deserializer;
 
     Directory d;
 
@@ -101,6 +110,20 @@ public class DataLoader implements ApplicationRunner {
         );
     }
 
+    private void loadAiInsight() throws IOException {
+        File file = new File("C:\\Users\\ratbo\\Documents\\Code\\SpringBoot\\mushroom-v1\\app\\src\\test\\java\\com\\mushroomapp\\app\\deserialize\\insight1.txt");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+
+        module.addDeserializer(AiInsight.class, deserializer);
+        objectMapper.registerModule(module);
+
+        AiInsight i = objectMapper.readValue(file, AiInsight.class);
+
+        System.out.println("got ai insights: \n" + i);
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
@@ -132,5 +155,9 @@ public class DataLoader implements ApplicationRunner {
 
 
         System.out.println("created post");
+
+        loadAiInsight();
+
+        System.out.println("loaded ai insights");
     }
 }

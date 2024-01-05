@@ -1,7 +1,7 @@
 package com.mushroomapp.app.model.storage;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mushroomapp.app.model.content.PostMedia;
+import com.mushroomapp.app.model.insight.AiInsight;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,8 +28,6 @@ public class Media {
     @JsonIgnore
     private Directory directory;
 
-//    @OneToOne
-//    private PostMedia postMedia;
 
     @Column(name = "created_on", updatable = false)
     @CreationTimestamp
@@ -37,6 +35,10 @@ public class Media {
 
     @Column(name = "filename")
     private String filename;
+
+    @OneToOne
+    @JoinColumn(name = "ai_insight_id")
+    private AiInsight aiInsight;
 
     @Transient
     public String getPath() {

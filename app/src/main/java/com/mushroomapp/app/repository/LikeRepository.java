@@ -1,6 +1,7 @@
 package com.mushroomapp.app.repository;
 
 import com.mushroomapp.app.model.content.Post;
+import com.mushroomapp.app.model.insight.MushroomSimilarImage;
 import com.mushroomapp.app.model.interaction.InteractionId;
 import com.mushroomapp.app.model.interaction.Like;
 import com.mushroomapp.app.model.profile.User;
