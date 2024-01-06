@@ -4,13 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.mushroomapp.app.model.profile.User;
 import com.mushroomapp.app.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,10 +39,25 @@ public class MockedUserControllerTests {
     private final ObjectMapper mapper = new ObjectMapper();
     private final ObjectWriter writer = mapper.writer().withDefaultPrettyPrinter();
 
-    private final List<User> users = List.of(
-            new User(UUID.fromString("0d95d28f-4e81-4eb3-a0e9-5fa36e351ea9"), "123123123", "user1", null, null, null),
-            new User(UUID.fromString("19d6da98-1869-451f-9d63-7ff837cd7258"), "abcabcabc", "user2", null, null, null)
-    );
+    private List<User> users;
+
+    @BeforeEach
+    public void initializeUsers() {
+        this.users = new LinkedList<>();
+
+        User user1 = new User();
+        user1.setToken("123123123");
+        user1.setUsername("user1");
+        user1.setId(UUID.fromString("0d95d28f-4e81-4eb3-a0e9-5fa36e351ea9"));
+
+        User user2 = new User();
+        user2.setToken("XYZXYZXYZ");
+        user2.setUsername("user2");
+        user2.setId(UUID.fromString("19d6da98-1869-451f-9d63-7ff837cd7258"));
+
+        this.users.add(user1);
+        this.users.add(user2);
+    }
 
 
     @Test
@@ -47,7 +65,9 @@ public class MockedUserControllerTests {
 
         User user = users.get(0);
 
-        when(userService.save(any())).thenAnswer(i -> i.getArguments()[0]);
+        System.out.println(user);
+
+        when(userService.save(any())).thenAnswer(i -> user);
 
 
         this.mockMvc
@@ -57,10 +77,8 @@ public class MockedUserControllerTests {
                                 writer.writeValueAsString(user)
                         ))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("token")))
-                .andExpect(content().string(containsString("username")))
-                .andExpect(content().string(containsString(user.getToken())))
-                .andExpect(content().string(containsString(user.getUsername())));
+                .andExpect(content().string(containsString("user_id")))
+                .andExpect(content().string(containsString(user.getId().toString())));
 
         verify(userService, times(1)).save(any());
     }
@@ -83,7 +101,7 @@ public class MockedUserControllerTests {
 
         User user = users.get(0);
 
-        when(userService.getUserById(eq(user.getId()))).thenReturn(user);
+        when(userService.getUserById(eq(user.getId()))).thenReturn(Optional.of(user));
 
         this.mockMvc
                 .perform(get(BASE_URL+"/"+user.getId().toString()))

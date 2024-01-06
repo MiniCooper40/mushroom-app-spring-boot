@@ -1,0 +1,539 @@
+{
+    "access_token": "6i2sbFJHIpxkfNv",
+    "model_version": "mushroom_id:1.0.0-beta",
+    "custom_id": null,
+    "input": {
+        "latitude": 49.207,
+        "longitude": 16.608,
+        "similar_images": true,
+        "images": [
+            "https://mushroom.kindwise.com/media/images/d8313aaa709d4ed69cd4a022e831c6d7.jpg"
+        ],
+        "datetime": "2023-07-31T08:38:08.585186+00:00"
+    },
+    "result": {
+        "classification": {
+            "suggestions": [
+                {
+                    "id": "558fbb57c985b800",
+                    "name": "Boletus edulis",
+                    "probability": 0.5454454,
+                    "similar_images": [
+                        {
+                            "id": "78884aed0149c1f6a7cac50ba07a7f6c00aec1ce",
+                            "url": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/788/84aed0149c1f6a7cac50ba07a7f6c00aec1ce.jpg",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+                            "citation": "Champi66",
+                            "similarity": 0.725,
+                            "url_small": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/788/84aed0149c1f6a7cac50ba07a7f6c00aec1ce.small.jpg"
+                        },
+                        {
+                            "id": "fdadb8a661308371864a767acb79f6c77c0afefa",
+                            "url": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/fda/db8a661308371864a767acb79f6c77c0afefa.jpeg",
+                            "license_name": "CC BY-SA 4.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+                            "citation": "Thomas Laxton",
+                            "similarity": 0.675,
+                            "url_small": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/fda/db8a661308371864a767acb79f6c77c0afefa.small.jpeg"
+                        }
+                    ],
+                    "details": {
+                        "common_names": [
+                            "Cep",
+                            "King Bolete",
+                            "Penny Bun",
+                            "Porcini"
+                        ],
+                        "taxonomy": {
+                            "genus": "Boletus",
+                            "order": "Boletales",
+                            "family": "Boletaceae",
+                            "phylum": "Basidiomycota",
+                            "kingdom": "Fungi"
+                        },
+                        "url": "https://en.wikipedia.org/wiki/Boletus_edulis",
+                        "rank": "species",
+                        "edibility": "choice",
+                        "characteristic": {
+                            "hymenium type": "pores",
+                            "stipe character": "bare stipe",
+                            "spore print color": "brown",
+                            "mushroom cap shape": "convex mushroom cap",
+                            "hymenium attachment": "adnate hymenium attachment",
+                            "mushroom ecological type": "mycorrhiza"
+                        },
+                        "look_alike": [
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Tylopilus_felleus",
+                                "entity_id": "890a4718415a46dc",
+                                "name": "Tylopilus felleus"
+                            },
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Boletus_reticulatus",
+                                "entity_id": "05e03d65448cc6d4",
+                                "name": "Boletus reticulatus"
+                            },
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Imleria_badia",
+                                "entity_id": "267b8dbf53a57b55",
+                                "name": "Imleria badia"
+                            },
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Boletus_regineus",
+                                "entity_id": "9a3dc8add32d55e3",
+                                "name": "Boletus regineus"
+                            }
+                        ],
+                        "psychoactive": false,
+                        "gbif_id": 5954958,
+                        "inaturalist_id": 48701,
+                        "description": {
+                            "value": "Boletus edulis (English: cep, penny bun, porcino or porcini) is a basidiomycete fungus, and the type species of the genus Boletus. Widely distributed in the Northern Hemisphere across Europe, Asia, and North America, it does not occur naturally in the Southern Hemisphere, although it has been introduced to southern Africa, Australia, New Zealand, and Brazil. Several closely related European mushrooms formerly thought to be varieties or forms of B. edulis have been shown using molecular phylogenetic analysis to be distinct species, and others previously classed as separate species are conspecific with this species. The western North American species commonly known as the California king bolete (Boletus edulis var. grandedulis) is a large, darker-coloured variant first formally identified in 2007.\nThe fungus grows in deciduous and coniferous forests and tree plantations, forming symbiotic ectomycorrhizal associations with living trees by enveloping the tree's underground roots with sheaths of fungal tissue. The fungus produces spore-bearing fruit bodies above ground in summer and autumn. The fruit body has a large brown cap which on occasion can reach 30 cm (12 in), rarely 40 cm (16 in) in diameter and 3 kg (6 lb 10 oz) in weight. Like other boletes, it has tubes extending downward from the underside of the cap, rather than gills; spores escape at maturity through the tube openings, or pores. The pore surface of the B. edulis fruit body is whitish when young, but ages to a greenish-yellow. The stout stipe, or stem, is white or yellowish in colour, up to 20 cm (8 in), rarely 30 cm (12 in) tall and 10 cm (4 in) thick, and partially covered with a raised network pattern, or reticulations.\nPrized as an ingredient in various culinary dishes, B. edulis is an edible mushroom held in high regard in many cuisines, and is commonly prepared and eaten in soups, pasta, or risotto. The mushroom is low in fat and digestible carbohydrates, and high in protein, vitamins, minerals and dietary fibre. Although it is sold commercially, it is very difficult to cultivate. Available fresh in autumn throughout Europe and Russia, it is most often dried, packaged, and distributed worldwide. It keeps its flavour after drying, and it is then reconstituted and used in cooking. B. edulis is one of the few fungi sold pickled.",
+                            "citation": "https://en.wikipedia.org/wiki/Boletus_edulis",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                        },
+                        "image": {
+                            "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/wikidata/286/286a600db931b24b6a3a69bca3e8942d6ac0379a.jpg",
+                            "citation": "//commons.wikimedia.org/wiki/User:Holleday",
+                            "license_name": "CC BY 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by/3.0/"
+                        },
+                        "images": [
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/wikipedia/c69/c6988598d16332762762943f6660d6a8be19f1f4.jpg",
+                                "citation": "//commons.wikimedia.org/w/index.php?title=User:ReddishClover&action=edit&redlink=1",
+                                "license_name": "CC BY-SA 4.0",
+                                "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/wikispecies/04f/04f071e8e2fb73a9e37d659f37e00c713b4913a8.jpg",
+                                "citation": "https://commons.wikimedia.org/wiki/File:Boletus_edulis_(Tillegem).jpg",
+                                "license_name": "CC BY-SA 4.0",
+                                "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/851/8519c8eae14cff99950eb9e4c3135d8e9f213069.jpeg",
+                                "citation": "Davide Puddu",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/444/4442b779329fbb0b874c9227a22bdbebc4d35aec.jpg",
+                                "citation": "hankabroz",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/553/553cd575513dd6e9f81f61ee380822638c9bdd96.jpeg",
+                                "citation": "Alan Rockefeller",
+                                "license_name": "CC BY 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/5fd/5fdb27d05f1935de8a281b0c38a52aaf9ba5f2ac.jpg",
+                                "citation": "chausinho",
+                                "license_name": "CC BY-NC-SA 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/c68/c686bbfe16189533a7f60322a38351fd72322001.jpeg",
+                                "citation": "noah_siegel",
+                                "license_name": "CC BY-NC-SA 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/5fd/5fdc535d4e0c02a5695f929a101bd1c6aa327348.jpeg",
+                                "citation": "Alan Rockefeller",
+                                "license_name": "CC BY 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/746/7466ac36ea8666987dd7886b156784901fb882e6.jpeg",
+                                "citation": "stepanni",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/fb0/fb02926a294ef8312ba67c37bd9fde542f6d642b.jpg",
+                                "citation": "bob15noble",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/14e/14e212fd8176e854e662b427f6a9442ce4f34a92.jpeg",
+                                "citation": "Ralph Foster",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/e31/e31cabf06140f22618e76eecd990dacaf4da6645.jpg",
+                                "citation": "Anne Syrjänen",
+                                "license_name": "CC0",
+                                "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"
+                            }
+                        ],
+                        "language": "en",
+                        "entity_id": "558fbb57c985b800"
+                    }
+                },
+                {
+                    "id": "0942ae9edbe22354",
+                    "name": "Boletus pinophilus",
+                    "probability": 0.24308042,
+                    "similar_images": [
+                        {
+                            "id": "227872e8b12fbc40f8e60aee186427690cd81ad0",
+                            "url": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/227/872e8b12fbc40f8e60aee186427690cd81ad0.jpeg",
+                            "license_name": "CC BY 4.0",
+                            "license_url": "https://creativecommons.org/licenses/by/4.0/",
+                            "citation": "Dmitry Kulakov",
+                            "similarity": 0.72,
+                            "url_small": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/227/872e8b12fbc40f8e60aee186427690cd81ad0.small.jpeg"
+                        },
+                        {
+                            "id": "a0fdc6414ef742affb5afe78ed210bcf65e48e82",
+                            "url": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/a0f/dc6414ef742affb5afe78ed210bcf65e48e82.jpg",
+                            "license_name": "CC BY 4.0",
+                            "license_url": "https://creativecommons.org/licenses/by/4.0/",
+                            "citation": "Виктория Билоус",
+                            "similarity": 0.632,
+                            "url_small": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/a0f/dc6414ef742affb5afe78ed210bcf65e48e82.small.jpg"
+                        }
+                    ],
+                    "details": {
+                        "common_names": [
+                            "Pine Bolete"
+                        ],
+                        "taxonomy": {
+                            "genus": "Boletus",
+                            "order": "Boletales",
+                            "family": "Boletaceae",
+                            "phylum": "Basidiomycota",
+                            "kingdom": "Fungi"
+                        },
+                        "url": "https://en.wikipedia.org/wiki/Boletus_pinophilus",
+                        "rank": "species",
+                        "edibility": "edible",
+                        "characteristic": {
+                            "hymenium type": "pores",
+                            "stipe character": "bare stipe",
+                            "spore print color": "olive brown",
+                            "mushroom cap shape": "convex mushroom cap",
+                            "hymenium attachment": "adnexed hymenium attachment",
+                            "mushroom ecological type": "mycorrhiza"
+                        },
+                        "look_alike": [
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Boletus_edulis",
+                                "entity_id": "558fbb57c985b800",
+                                "name": "Boletus edulis"
+                            },
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Tylopilus_felleus",
+                                "entity_id": "890a4718415a46dc",
+                                "name": "Tylopilus felleus"
+                            },
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Boletus_rex-veris",
+                                "entity_id": "d7e25bae427d2ab0",
+                                "name": "Boletus rex-veris"
+                            },
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Boletus_aereus",
+                                "entity_id": "032871c81837fcd3",
+                                "name": "Boletus aereus"
+                            },
+                            {
+                                "url": "https://en.wikipedia.org/wiki/Boletus_reticulatus",
+                                "entity_id": "05e03d65448cc6d4",
+                                "name": "Boletus reticulatus"
+                            }
+                        ],
+                        "psychoactive": false,
+                        "gbif_id": 5954949,
+                        "inaturalist_id": 335942,
+                        "description": {
+                            "value": "Boletus pinophilus, commonly known as the pine bolete or pinewood king bolete, is a basidiomycete fungus of the genus Boletus found throughout Europe and western Asia. Described by Italian naturalist Carlo Vittadini in 1835, B. pinophilus was for many years considered a subspecies or form of the porcini mushroom B. edulis before genetic studies confirmed its distinct status. In 2008, B. pinophilus in western North America were reclassified as a new species, B. rex-veris. B. pinophilus is edible, and may be preserved and cooked.\nThe fungus grows predominantly in coniferous forests on sandy soils, forming ectomycorrhizal associations in symbiosis with living trees by enveloping the tree's underground roots with sheaths of fungal tissue. Host trees include various species of pine, the European silver fir and European spruce, as well as deciduous trees such as chestnut trees, oak and beech. The fungus produces spore-bearing fruit bodies (known as \"mushrooms\") above ground under pine trees in summer and autumn. It has a red-brown to maroon-coloured cap and a large and bulbous stipe, covered with coarse orange-red reticulation. As with other boletes, the size of the fruiting body is variable.",
+                            "citation": "https://en.wikipedia.org/wiki/Boletus_pinophilus",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                        },
+                        "image": {
+                            "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/wikidata/188/18888648f6a3fc9e3397eea5aa5943a50e57b74f.jpg",
+                            "citation": "//commons.wikimedia.org/wiki/User:Paffka",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                        },
+                        "images": [
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/wikidata/62e/62e0203def2373c6821fe61a02b2b670ccb45aab.jpg",
+                                "citation": "https://commons.wikimedia.org/wiki/File:Boletus_pinophilus.jpg",
+                                "license_name": "CC BY-SA 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/673/6731a27cbe0193831184f287d31a7d575f999073.jpeg",
+                                "citation": "Jose Luis Gonzalez",
+                                "license_name": "CC0",
+                                "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/5cf/5cff4076184252640ed0538640980181106cee70.jpg",
+                                "citation": "Tatyana Zarubo",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/48e/48e5a1ce259e6fdbe779688a04a15dc38c66613d.jpeg",
+                                "citation": "Alan Rockefeller",
+                                "license_name": "CC BY 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/0ff/0ff0df1b9ce93a6caec50a4b769f7103281c9825.jpg",
+                                "citation": "Kari Pihlaviita",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/c0d/c0d441c0831e4f429f6088ae6c00b68bdf404735.jpg",
+                                "citation": "Tatiana Bulyonkova",
+                                "license_name": "CC BY-NC-SA 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/f09/f0962f7f1df2cb1eb044c15e9cb19faac9b3d792.jpeg",
+                                "citation": "Jose Luis Gonzalez",
+                                "license_name": "CC0",
+                                "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/a13/a13f582810634eff9aa3eb6775319a0a27b3c08a.jpeg",
+                                "citation": "Alan Rockefeller",
+                                "license_name": "CC BY 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/097/097aa9fa4eac7d96189dc52738becfbb70b251e1.jpg",
+                                "citation": "António Pena",
+                                "license_name": "CC BY-NC-SA 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+                            }
+                        ],
+                        "language": "en",
+                        "entity_id": "0942ae9edbe22354"
+                    }
+                },
+                {
+                    "id": "05e03d65448cc6d4",
+                    "name": "Boletus reticulatus",
+                    "probability": 0.18983299,
+                    "similar_images": [
+                        {
+                            "id": "7a09474491fe9b5861f6a99ffc9cbb49602841b2",
+                            "url": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/7a0/9474491fe9b5861f6a99ffc9cbb49602841b2.jpg",
+                            "license_name": "CC BY 4.0",
+                            "license_url": "https://creativecommons.org/licenses/by/4.0/",
+                            "citation": "Eva Weme",
+                            "similarity": 0.65,
+                            "url_small": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/7a0/9474491fe9b5861f6a99ffc9cbb49602841b2.small.jpg"
+                        },
+                        {
+                            "id": "55e7df2fb82fe9dcca38f90813582eb3cfb3219f",
+                            "url": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/55e/7df2fb82fe9dcca38f90813582eb3cfb3219f.jpg",
+                            "license_name": "CC BY 4.0",
+                            "license_url": "https://creativecommons.org/licenses/by/4.0/",
+                            "citation": "Inger-Lise Fonneland",
+                            "similarity": 0.628,
+                            "url_small": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/55e/7df2fb82fe9dcca38f90813582eb3cfb3219f.small.jpg"
+                        }
+                    ],
+                    "details": {
+                        "common_names": [
+                            "Summer Bolete",
+                            "summer cep"
+                        ],
+                        "taxonomy": {
+                            "genus": "Boletus",
+                            "order": "Boletales",
+                            "family": "Boletaceae",
+                            "phylum": "Basidiomycota",
+                            "kingdom": "Fungi"
+                        },
+                        "url": "https://en.wikipedia.org/wiki/Boletus_reticulatus",
+                        "rank": "species",
+                        "edibility": null,
+                        "characteristic": null,
+                        "look_alike": null,
+                        "psychoactive": null,
+                        "gbif_id": 5954691,
+                        "inaturalist_id": 350216,
+                        "description": {
+                            "value": "Boletus reticulatus (alternately known as Boletus aestivalis (Paulet) Fr.), and commonly referred to as the summer cep is a basidiomycete fungus of the genus Boletus. It occurs in deciduous forests of Europe  where it forms a symbiotic mycorrhizal relationship with species of oak (Quercus). The fungus produces fruiting bodies in the summer months which are edible and popularly collected. The summer cep was formally described by Jacob Christian Schäffer as Boletus reticulatus in 1774, which took precedence over B. aestivalis as described by Jean-Jacques Paulet in 1793.",
+                            "citation": "https://en.wikipedia.org/wiki/Boletus_reticulatus",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                        },
+                        "image": {
+                            "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/wikipedia/57f/57f670ad1348ab2e7c99c60c952db7af1461ece1.jpg",
+                            "citation": "//commons.wikimedia.org/wiki/User:Rude",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                        },
+                        "images": [
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/531/5310d31f5a014451af1927f502180bb4137f5684.jpeg",
+                                "citation": "Davide Puddu",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/9ef/9ef17c4980b7af406d2e190694dbe7050394f7f4.jpg",
+                                "citation": "Davide Puddu",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/980/980442c6912cd9a0526d31fc44192a14407dbe2d.jpg",
+                                "citation": "hairchaser",
+                                "license_name": "CC BY-SA 4.0",
+                                "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/133/133bb89d27509908b8062d4ed42ca001112dbbcd.jpeg",
+                                "citation": "Yago Carreño",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/203/203c6ea56333ad5d18442ac638b89407b301e950.jpg",
+                                "citation": "mycohollic",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/5ac/5ac47717d606992e9a5bc03482deb8d7d55c655a.jpeg",
+                                "citation": "Yaroslav Andrianov",
+                                "license_name": "CC0",
+                                "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/14b/14b9f9243c0138684d3b1d74b0747e5ef443b2e3.jpeg",
+                                "citation": "Zdeňka Nováková",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            }
+                        ],
+                        "language": "en",
+                        "entity_id": "05e03d65448cc6d4"
+                    }
+                },
+                {
+                    "id": "9a3dc8add32d55e3",
+                    "name": "Boletus regineus",
+                    "probability": 0.010032878,
+                    "similar_images": [
+                        {
+                            "id": "ad117f343b0629e44d5a393a5721821e831252c0",
+                            "url": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/ad1/17f343b0629e44d5a393a5721821e831252c0.jpg",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+                            "citation": "Richard Sullivan",
+                            "similarity": 0.754,
+                            "url_small": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/ad1/17f343b0629e44d5a393a5721821e831252c0.small.jpg"
+                        },
+                        {
+                            "id": "0cd043310c40ec3241cf91938cf5b3d689d4013e",
+                            "url": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/0cd/043310c40ec3241cf91938cf5b3d689d4013e.jpg",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+                            "citation": "BakerSt10",
+                            "similarity": 0.753,
+                            "url_small": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/similar_images/1/0cd/043310c40ec3241cf91938cf5b3d689d4013e.small.jpg"
+                        }
+                    ],
+                    "details": {
+                        "common_names": [
+                            "Queen Bolete"
+                        ],
+                        "taxonomy": {
+                            "genus": "Boletus",
+                            "order": "Boletales",
+                            "family": "Boletaceae",
+                            "phylum": "Basidiomycota",
+                            "kingdom": "Fungi"
+                        },
+                        "url": "https://en.wikipedia.org/wiki/Boletus_regineus",
+                        "rank": "species",
+                        "edibility": "choice",
+                        "characteristic": {
+                            "hymenium type": "pores",
+                            "stipe character": "bare stipe",
+                            "spore print color": "olive",
+                            "mushroom cap shape": "convex mushroom cap",
+                            "hymenium attachment": "adnate hymenium attachment",
+                            "mushroom ecological type": "mycorrhiza"
+                        },
+                        "look_alike": null,
+                        "psychoactive": false,
+                        "gbif_id": 6016413,
+                        "inaturalist_id": 415504,
+                        "description": {
+                            "value": "Boletus regineus, commonly known as the queen bolete, is an edible and highly regarded fungus of the genus Boletus that inhabits southwestern North America. It was considered a variant of the similarly edible B. edulis for many years until declared a unique species in 2008.  Phylogenetic analysis has shown B. regineus as a member of a clade, or closely related group, with B. subcaerulescens, Gastroboletus subalpinus, B. pinophilus, B. fibrillosus, and B. rex-veris.The cap is 5–18 cm (2–7 in) wide, convex then flat, brown with a whitish dusting when young. The stalk is 5–15 cm long, 3–6 cm wide, clavate then equal, and whitish tan.",
+                            "citation": "https://en.wikipedia.org/wiki/Boletus_regineus",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                        },
+                        "image": {
+                            "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/wikidata/bfb/bfbe8b7860fa8a1bef3a656d99230c54a33ccc84.jpg",
+                            "citation": "https://commons.wikimedia.org/wiki/File:Boletus_regineus_28082.jpg",
+                            "license_name": "CC BY-SA 3.0",
+                            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                        },
+                        "images": [
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/ed7/ed7d91c497f1e6ca685455047d87b33bba9bfde1.jpeg",
+                                "citation": "Christian Schwarz",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/e6b/e6ba637b1d482ecf57a6221898dedaa5a12e72b5.jpg",
+                                "citation": "Di",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/e39/e395e567126a3b0a785c6fd0cc5b016d7d7b72eb.jpeg",
+                                "citation": "Christian Schwarz",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/21f/21f8e9fe8380cba9be27b3ccf7630d738b893b2b.jpeg",
+                                "citation": "debk",
+                                "license_name": "CC BY-SA 4.0",
+                                "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                            },
+                            {
+                                "value": "https://mushroom-id.ams3.cdn.digitaloceanspaces.com/knowledge_base/inaturalist/681/6815c1fb1657fe5a01c794b827c3bc9eeeb3ba29.jpg",
+                                "citation": "Christian Schwarz",
+                                "license_name": "CC BY-NC 3.0",
+                                "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+                            }
+                        ],
+                        "language": "en",
+                        "entity_id": "9a3dc8add32d55e3"
+                    }
+                }
+            ]
+        }
+    },
+    "status": "COMPLETED",
+    "sla_compliant_client": true,
+    "sla_compliant_system": true,
+    "created": 1690792688.585186,
+    "completed": 1690792689.010537
+}

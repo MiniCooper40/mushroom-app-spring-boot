@@ -7,10 +7,12 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 @Service
 public class MediaService {
@@ -23,6 +25,10 @@ public class MediaService {
 
     public Media save(Media media) {
         return this.mediaRepository.save(media);
+    }
+
+    public Optional<Media> getMediaByFilename(String filename) {
+        return this.mediaRepository.getMediaByFilename(filename);
     }
 
 }

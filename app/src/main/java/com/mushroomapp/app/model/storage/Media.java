@@ -1,8 +1,11 @@
 package com.mushroomapp.app.model.storage;
 
-import com.mushroomapp.app.model.content.PostMedia;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mushroomapp.app.model.insight.AiInsight;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -10,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Setter
+@Getter
+@ToString
 public class Media {
 
     @Id
@@ -18,11 +23,11 @@ public class Media {
     private UUID id;
 
     @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "directory.directory_id")
+    @JoinColumn(name = "directory_id")
+    @ToString.Exclude
+    @JsonIgnore
     private Directory directory;
 
-    @OneToOne
-    private PostMedia postMedia;
 
     @Column(name = "created_on", updatable = false)
     @CreationTimestamp
@@ -30,4 +35,13 @@ public class Media {
 
     @Column(name = "filename")
     private String filename;
+
+    @OneToOne
+    @JoinColumn(name = "ai_insight_id")
+    private AiInsight aiInsight;
+
+    @Transient
+    public String getPath() {
+        return this.directory.getPath() + this.getFilename();
+    }
 }
